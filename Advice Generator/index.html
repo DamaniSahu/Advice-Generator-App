@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&family=Rubik:ital,wght@0,300..900;1,300..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  
+  <title>Advice generator app</title>
+
+  
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Manrope", sans-serif;
+    }
+
+    body{
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: hsl(218, 23%, 16%)
+    }
+
+    #box{
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      background-color: hsl(217, 19%, 38%);
+    }
+
+    p{
+      margin-top: 20px;
+      font-size: 0.7rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: hsl(150, 100%, 66%);
+    }
+
+    h1{
+      width: 90%;
+      font-size: 1.5rem;
+      text-align: justify;
+      color: hsl(193, 38%, 86%);
+    }
+
+    #divider{
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      display: block;
+    }
+
+    #dividerM{
+      display: none;
+    }
+
+    #diceBox{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: -40px;
+      background-color: hsl(150, 100%, 66%);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #diceBox:hover {
+      box-shadow: 0 0 20px hsl(150, 100%, 66%);
+    }
+
+
+    @media(max-width: 767px) {
+      #box{
+        width: 90%;
+      }
+
+      #divider{
+        display: none;
+      }
+
+      #dividerM{
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <p>Advice # <span id="slipId"></span></p>
+  <h1 id="advice"></h1>
+  <img src="images/pattern-divider-desktop.svg" alt="pattern-divider-desktop" id="divider">
+  <img src="images/pattern-divider-mobile.svg" alt="pattern-divider-mobile" id="dividerM">
+  <div id="diceBox">
+      <img src="images/icon-dice.svg" alt="icon-dice">
+  </div>
+</div>
+  
+<script>
+  async function getAdvice() {
+    try{
+      const response = await fetch("https://api.adviceslip.com/advice", { cache: "no-cache" });
+      if(!response.ok) {
+        throw new Error(response.status);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      document.getElementById("slipId").textContent  = data.slip.id;
+      document.getElementById("advice").textContent  = `"${data.slip.advice}"`;
+
+    } catch(error) {
+      console.log('Error fetching data:', error);
+      document.getElementById("advice").textContent  = "Sorry, failed to load advice.";
+    }
+  }
+
+  document.getElementById("diceBox").addEventListener("click", () => {
+    getAdvice();
+  })
+
+   getAdvice();
+</script>
+</body>
+</html>
