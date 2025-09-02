@@ -18,13 +18,12 @@ A simple web app that fetches random pieces of advice from the [Advice Slip API]
 - **CSS3 (Flexbox & Responsive Design)**  
 - **JavaScript (ES6+, async/await)**  
 - **Advice Slip API**
-- 
 ---
 
 ## ⚙️ Installation & Usage
 1. Clone this repository:  
    ```bash
-   git clone https://github.com/YOUR-USERNAME/advice-generator-app.git
+   git clone https://github.com/DamaniSahu/Advice-Generator-App.git
 2. Navigate into the project folder:
    cd advice-generator-app
 3. Open index.html in your browser.
